@@ -1,0 +1,2 @@
+# run from GIT repository where the R file is located. Add the packages of interest to the code without [].
+"C:\Program Files\R\R-4.0.3\bin\Rscript.exe" C:\Users\EHV006\GIT\R-install-dependencies\build-dep-list.R [pkg] [pkg] ... [pkg]

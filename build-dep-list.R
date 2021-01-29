@@ -47,6 +47,8 @@
 #
 ################################################################################
 
+setwd("C:/Users/EHV006/Desktop")
+
 # For testing and development, use a subset of packages.  If this script is
 # called as noted above then the command line args will be used.
 if (interactive()) {
@@ -62,7 +64,7 @@ if (interactive()) {
 
 # Repositories to look for packages
 CRAN <- "https://cran.rstudio.com/"
-BIOC <- "https://bioconductor.org/packages/release/bioc/"
+BIOC <- "http://cran.r-project.org"
 
 # Define the base packages.  These are packages which come with R upon install
 # of R.  These packages include: "base", "compiler", "datasets", "graphics",
@@ -83,11 +85,11 @@ available_pkgs <- available.packages(repos = c(CRAN, BIOC))
 pkgs_to_download <- OUR_PACKAGES
 i <- 1L
 while(i <= length(pkgs_to_download)) {
-  deps <-
-    unlist(tools::package_dependencies(packages = pkgs_to_download[i],
-                                       which = c("Depends", "Imports", "LinkingTo"),
-                                       db = available_pkgs,
-                                       recursive = FALSE),
+  deps <- unlist(packrat:::recursivePackageDependencies(pkgs_to_download[i],lib.loc = .libPaths()[1]),
+    #unlist(tools::package_dependencies(packages = pkgs_to_download[i],
+     #                                  which = c("Depends", "Imports", "LinkingTo"),
+      #                                 db = available_pkgs,
+       #                                recursive = FALSE),
            use.names = FALSE)
   deps <- deps[!(deps %in% base_pkgs)]
   pkgs_to_download <- append(pkgs_to_download, deps, i)
